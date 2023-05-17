@@ -14,14 +14,17 @@ import {
 import { ExpenseTrackerContext } from "../../../context/context";
 
 import { Delete, MoneyOff } from "@mui/icons-material";
-import "./list.css";
 const List = () => {
   const { deleteTransaction, transactions } = useContext(ExpenseTrackerContext);
 
   console.log(deleteTransaction);
 
   return (
-    <MUIList dense={false} className="list">
+    <MUIList
+      dense={false}
+      className="list"
+      style={{ maxHeight: "150px", overflow: "auto" }}
+    >
       {transactions.map((transaction) => (
         <Slide
           direction="down"
@@ -33,11 +36,11 @@ const List = () => {
           <ListItem>
             <ListItemAvatar>
               <Avatar
-                className={
-                  transaction.type === "income"
-                    ? "avatarIncome"
-                    : "avatarExpense"
-                }
+                style={{
+                  color: "#fff",
+                  backgroundColor:
+                    transaction.type === "income" ? "#4caf50" : "#f44336",
+                }}
               >
                 <MoneyOff />
               </Avatar>

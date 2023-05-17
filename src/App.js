@@ -13,7 +13,12 @@ const App = () => {
         spacing={0}
         alignItems="center"
         justifyContent="center"
-        style={{ height: "100vh" }}
+        style={{
+          height: "100vh",
+          // margin: "20px",
+          // marginRight: "20px",
+          gap: "16px",
+        }}
       >
         <Grid item xs={12} sm={4}>
           <Details title="income" />
