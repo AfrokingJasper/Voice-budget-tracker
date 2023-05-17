@@ -1,0 +1,29 @@
+.income {
+  border-bottom: 10px solid rgba(0, 255, 0, 0.5);
+}
+.expense {
+  border-bottom: 10px solid rgba(255, 0, 0, 0.5);
+}
+
+.desktop {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .main {
+    padding-bottom: 5%;
+  }
+}
+
+@media (max-width: 600px) {
+  .last {
+    margin-bottom: 16px; /* or use your preferred value */
+    padding-bottom: 200px;
+  }
+}

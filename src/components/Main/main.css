@@ -1,0 +1,28 @@
+.root {
+  background-color: red;
+  padding: 16px; /* Assuming theme.spacing(2) equals 16px */
+}
+
+.media {
+  height: 0;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+}
+
+.expand {
+  transform: rotate(0deg);
+  margin-left: auto;
+  transition-property: transform;
+  transition-duration: 0.3s;
+}
+
+.expandOpen {
+  transform: rotate(180deg);
+}
+
+.cardContent {
+  padding-top: 0;
+}
+
+.divider {
+  margin: 20px 0;
+}
