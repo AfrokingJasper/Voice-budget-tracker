@@ -8,6 +8,7 @@ import {
   Divider,
 } from "@mui/material";
 import Form from "./Form/Form";
+import List from "./List/List";
 
 const Main = () => {
   return (
@@ -15,7 +16,7 @@ const Main = () => {
       <CardHeader title="Expense Tracker" subheader="Powered by Speechly" />
       <CardContent>
         <Typography align="center" variant="h5">
-          Total Valance $100
+          Total Balance $100
         </Typography>
         <Typography
           variant="subtitle1"
@@ -31,7 +32,7 @@ const Main = () => {
       <CardContent className="cardContent">
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            {/* list */}
+            <List />
           </Grid>
         </Grid>
       </CardContent>
