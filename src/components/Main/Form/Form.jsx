@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./form.css";
 import { ExpenseTrackerContext } from "../../../context/context";
 import {
@@ -17,19 +17,23 @@ import {
   expenseCategories,
 } from "../../../constants/categories";
 import formatDate from "../../../utils/formatDate";
+import { useSpeechContext } from "@speechly/react-client";
 
 const initialState = {
   amount: "",
   category: "",
-  type: "income",
+  type: "Income",
   date: formatDate(new Date()),
 };
 
 const Form = () => {
   const [formData, setFormData] = useState(initialState);
   const { addTransaction } = useContext(ExpenseTrackerContext);
+  const { segment } = useSpeechContext();
 
   const createTransaction = () => {
+    if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-"))
+      return;
     const transaction = {
       ...formData,
       amount: Number(formData.amount),
@@ -40,14 +44,105 @@ const Form = () => {
     setFormData(initialState);
   };
 
+  useEffect(() => {
+    if (segment && segment.intent.intent === "add_expense") {
+      setFormData((prevData) => ({
+        ...prevData,
+        type: "Expense",
+      }));
+    } else if (segment && segment.intent.intent === "add_income") {
+      setFormData((prevData) => ({
+        ...prevData,
+        type: "Income",
+      }));
+    } else if (
+      segment &&
+      segment.isFinal &&
+      segment.intent.intent === "create_transaction"
+    ) {
+      return createTransaction();
+    } else if (
+      segment &&
+      segment.isFinal &&
+      segment.intent.intent === "cancel_transaction"
+    ) {
+      return setFormData(initialState);
+    }
+    segment &&
+      segment.entities.forEach((e) => {
+        const category = `${e.value.charAt(0)}${e.value
+          .slice(1)
+          .toLowerCase()}`;
+        switch (e.type) {
+          case "amount":
+            setFormData({ ...formData, amount: e.value });
+            break;
+          case "category":
+            if (incomeCategories.map((iC) => iC.type).includes(category)) {
+              setFormData({ ...formData, type: "Income", category });
+            } else if (
+              expenseCategories.map((eC) => eC.type).includes(category)
+            ) {
+              setFormData({ ...formData, type: "Expense", category });
+            }
+            break;
+          case "date":
+            setFormData({ ...formData, date: e.value });
+            break;
+          default:
+            break;
+        }
+        console.log(e.value);
+      });
+
+    if (
+      segment &&
+      segment.isFinal &&
+      formData.amount &&
+      formData.category &&
+      formData.date &&
+      formData.type
+    ) {
+      createTransaction();
+    }
+    // console.log("hello world");
+  }, [segment]);
+
+  // useEffect(() => {
+  //   if (segment && segment.intent.intent === "add_expense") {
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       type: "Expense",
+  //     }));
+  //   } else if (segment && segment.intent.intent === "add_income") {
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       type: "Income",
+  //     }));
+  //   } else if (
+  //     segment &&
+  //     segment.isFinal &&
+  //     segment.intent.intent === "create_transaction"
+  //   ) {
+  //     createTransaction();
+  //   } else if (
+  //     segment &&
+  //     segment.isFinal &&
+  //     segment.intent.intent === "cancel_transaction"
+  //   ) {
+  //     setFormData(initialState);
+  //   }
+  //   // console.log("hello world");
+  // }, [segment, createTransaction, initialState, setFormData]);
+
   const selectedCategories =
-    formData.type === "income" ? incomeCategories : expenseCategories;
+    formData.type === "Income" ? incomeCategories : expenseCategories;
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography align="center" variant="subtitle2" gutterBottom>
-          ...
+          {segment && <>{segment.words.map((w) => w.value).join(" ")}</>}
         </Typography>
       </Grid>
       <Grid item xs={6}>
@@ -57,7 +152,7 @@ const Form = () => {
             value={formData.type}
             onChange={(e) => setFormData({ ...formData, type: e.target.value })}
           >
-            <MenuItem value="income">Income</MenuItem>
+            <MenuItem value="Income">Income</MenuItem>
             <MenuItem value="Expense">Expense</MenuItem>
           </Select>
         </FormControl>

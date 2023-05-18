@@ -1,5 +1,11 @@
 import React from "react";
 import { Grid } from "@mui/material";
+import {
+  PushToTalkButton,
+  PushToTalkButtonContainer,
+} from "@speechly/react-ui";
+// import ErrorPanel from "@speechly/react-ui";
+
 import Details from "./components/Details/Details";
 import Main from "./components/Main/Main";
 import "./app.css";
@@ -15,21 +21,24 @@ const App = () => {
         justifyContent="center"
         style={{
           height: "100vh",
-          // margin: "20px",
-          // marginRight: "20px",
           gap: "16px",
         }}
       >
         <Grid item xs={12} sm={4}>
-          <Details title="income" />
+          <Details title="Income" />
         </Grid>
         <Grid item xs={12} sm={3}>
           <Main />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Details title="expense" />
+          <Details title="Expense" />
         </Grid>
       </Grid>
+      {/* <button></button> */}
+      <PushToTalkButtonContainer>
+        <PushToTalkButton />
+        {/* <ErrorPanel /> */}
+      </PushToTalkButtonContainer>
     </div>
   );
 };

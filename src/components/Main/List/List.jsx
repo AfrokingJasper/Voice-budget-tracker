@@ -17,8 +17,6 @@ import { Delete, MoneyOff } from "@mui/icons-material";
 const List = () => {
   const { deleteTransaction, transactions } = useContext(ExpenseTrackerContext);
 
-  console.log(deleteTransaction);
-
   return (
     <MUIList
       dense={false}
@@ -39,7 +37,7 @@ const List = () => {
                 style={{
                   color: "#fff",
                   backgroundColor:
-                    transaction.type === "income" ? "#4caf50" : "#f44336",
+                    transaction.type === "Income" ? "#4caf50" : "#f44336",
                 }}
               >
                 <MoneyOff />
