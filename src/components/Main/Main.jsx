@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {  useContext } from "react";
 import {
   Card,
   CardHeader,
@@ -10,6 +10,7 @@ import {
 import Form from "./Form/Form";
 import List from "./List/List";
 import { ExpenseTrackerContext } from "../../context/context";
+import InfoCard from "../InfoCard";
 
 const Main = () => {
   const { balance } = useContext(ExpenseTrackerContext);
@@ -24,8 +25,8 @@ const Main = () => {
           variant="subtitle1"
           style={{ lineHeight: "1.5em", marginTop: "20px" }}
         >
+          <InfoCard />
           {/* info card component */}
-          Try saying Add income for $100 in category salary for monday
         </Typography>
         <Divider />
         <Form />
