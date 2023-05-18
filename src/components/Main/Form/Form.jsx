@@ -107,35 +107,7 @@ const Form = () => {
     ) {
       createTransaction();
     }
-    // console.log("hello world");
   }, [segment]);
-
-  // useEffect(() => {
-  //   if (segment && segment.intent.intent === "add_expense") {
-  //     setFormData((prevData) => ({
-  //       ...prevData,
-  //       type: "Expense",
-  //     }));
-  //   } else if (segment && segment.intent.intent === "add_income") {
-  //     setFormData((prevData) => ({
-  //       ...prevData,
-  //       type: "Income",
-  //     }));
-  //   } else if (
-  //     segment &&
-  //     segment.isFinal &&
-  //     segment.intent.intent === "create_transaction"
-  //   ) {
-  //     createTransaction();
-  //   } else if (
-  //     segment &&
-  //     segment.isFinal &&
-  //     segment.intent.intent === "cancel_transaction"
-  //   ) {
-  //     setFormData(initialState);
-  //   }
-  //   // console.log("hello world");
-  // }, [segment, createTransaction, initialState, setFormData]);
 
   const selectedCategories =
     formData.type === "Income" ? incomeCategories : expenseCategories;

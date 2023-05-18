@@ -1,4 +1,4 @@
-import React, {  useContext } from "react";
+import React, { useContext } from "react";
 import {
   Card,
   CardHeader,
@@ -26,7 +26,6 @@ const Main = () => {
           style={{ lineHeight: "1.5em", marginTop: "20px" }}
         >
           <InfoCard />
-          {/* info card component */}
         </Typography>
         <Divider />
         <Form />
